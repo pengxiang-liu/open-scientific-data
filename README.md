@@ -15,4 +15,4 @@ A collection of datasets for energy system optimization.
 [Pod Point](https://pod-point.com/)
 
 ## 2. Data and results in the papers
-1) "An improved spatial branch-and-bound algorithm for non-convex optimal electricity-gas flow" [TPWRS-01328-2020](https://github.com/TesLarry/datasets/tree/master/academic-papers/01-TPWRS-00162-2021)
+1) "An improved spatial branch-and-bound algorithm for non-convex optimal electricity-gas flow" [TPWRS-00162-2021](https://github.com/TesLarry/datasets/tree/master/academic-papers/01-TPWRS-00162-2021)
