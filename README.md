@@ -1,18 +1,15 @@
-# Datasets
+# Open-Scientific-Data
 
 [Github](https://github.com/TesLarry) | 
 [Southeast University](https://www.seu.edu.cn/) |
 [Team Homepage](http://www.seuwgu.icoc.cc/)
 
-A collection of datasets for energy system optimization.
+A platform to open my scientific data to the community.
 
-## 1. Raw data
+## 1. Journal Articles
 
-[MATPOWER](https://matpower.org/) |
-[LIINES](http://amfarid.scripts.mit.edu/Datasets/SPG-Data/index.php) | 
-[GasLib](http://gaslib.zib.de/) |
-[IIT](http://motor.ece.iit.edu/data/) |
-[Pod Point](https://pod-point.com/)
+1. P. Liu. et. al., "An improved spatial branch-and-bound algorithm for non-convex optimal electricity-gas flow", to be published in **IEEE Transactions on Power Systems**.
 
-## 2. Data and results in the papers
-1) "An improved spatial branch-and-bound algorithm for non-convex optimal electricity-gas flow" [TPWRS-00162-2021](https://github.com/TesLarry/datasets/tree/master/academic-papers/01-TPWRS-00162-2021)
+## 2. Conferences
+
+1. P. Liu. et. al., "A Novel Acceleration Strategy for N-1 Contingency Screening in Distribution System" 2020 IEEE Power & Energy Society General Meeting (PESGM), 2020, pp. 1-5, doi: 10.1109/PESGM41954.2020.9281445. (**Best Conference Paper Award**).
