@@ -1,24 +1,36 @@
 # --------------------------------------------------------------------------- #
-# Copyright 2020, Southeast University, Liu Pengxiang
+# MIT license
+# Copyright 2020–2021, School of Electrical Engineering, Southeast University, 
+# Pengxiang Liu. All Rights Reserved.
 # 
-# A spatial branch-and-bound algorithm for mixed-integer bilinear programming,
-# where each convexified branch is solved by cplex 12.10.
-#
-# min   3 * x0 + 1 * x1 + 5 * x2 + 2 * x3 + 3 * x4
-# s.t.  3 * x0 + 1 * x1 + 2 * x2 == 12
-#       2 * x0 - 1 * x1 + 2 * x2 + 2 * x3 >= 10
-#       5 * x0 + 2 * x2 + 5 * x3 + 3 * x4 >= 15
-#       2 * x1 + 3 * x4 >= 5
-#       x2 * x3 = x4 (bilinear constraint)
-#       0 <= x0 <= 1, 0 <= x1 <= 1
-#       0.5 <= x2 <= 8, 0.5 <= x3 <= 8, 0.5 <= x4 <= 8
-#       x0 and x1 are binary; x2, x3 and x4 are continuous
-#
-# min   c * x
-# s.t.  A * x == d
-#       B * x >= e
-#       bilinear(x) == 0
+# File: spatial-bnb-cplex-1.py
+# Version: 1.0.0
 # --------------------------------------------------------------------------- #
+
+
+'''
+A spatial branch-and-bound (sB&B) demo script for non-convex problem where the 
+model is formulated as a mixed-integer bilinear programming.
+
+min   3 * x0 + 1 * x1 + 5 * y0 + 2 * y1 + 3 * y2
+s.t.  3 * x0 + 1 * x1 + 2 * y0 = 12
+      2 * x0 - 1 * x1 + 2 * y0 + 2 * y1 >= 10
+      5 * x1 + 2 * y0 + 5 * y1 + 3 * y2 >= 15
+      2 * x1 + 3 * y2 >= 5
+      y0 * y1 = y2 (bilinear constraint)
+      0.5 <= y0 <= 8, 0.5 <= y1 <= 8, 0.5 <= y2 <= 8
+      x0 and x1 are binary; y0, y1 and y2 are continuous
+
+In this script, the sB&B algorithm is implemented in CPLEX through generic 
+callback interface. Spatial branching is implemented on the variable of the 
+first bilinear infeasible constraint using classical branching strategy.
+
+min   c * x
+s.t.  A * x == d
+      B * x >= e
+      lb <= x <= ub
+      x(p_n) * x(q_n) = x(r_n)
+'''
 
 
 import os
@@ -90,22 +102,48 @@ class my_callback(object):
                 )
 
 
-# This function sets the parameters
+# set coefficient matrices
 # --------------------------------------------------------------------------- #
 # 
-def prob_settings(prob):
+def set_coefficient():
+
+    c  = [3, 1, 5, 2, 3]
+    d  = [12]
+    e  = [10, 15, 5]
+    A  = [[3,  1,  2,  0,  0]]
+    B  = [[2, -1,  2,  1,  0], 
+          [5,  0,  2,  5,  3], 
+          [0,  2,  0,  0,  3]]
+    lb = [0, 0, 0.5, 0.5, 0.5]
+    ub = [1, 1, 8.0, 8.0, 8.0]
+    bl = [[2, 3, 4]]
+    tp = ['I', 'I', 'C', 'C', 'C']
+
+    name = 'c, d, e, A, B, lb, ub, bl, tp'.split((', '))
+    coef = {}
+    for i in name:
+        coef[i] = eval(i)
+    
+    return coef
+
+
+# cplex parameters
+# --------------------------------------------------------------------------- #
+# 
+def set_cplex_parameters(prob):
 
     # turn off presolve
     prob.parameters.threads.set(1)
     prob.parameters.preprocessing.reduce.set(0)
     prob.parameters.preprocessing.linear.set(0)
-    # prob.parameters.preprocessing.presolve.set(0)
     
     # return
     return prob
 
 
 # add the convex hull for bilinear equality constraints
+# --------------------------------------------------------------------------- #
+# 
 def convex_hull(ix, iy, iz, lx, ux, ly, uy):
     
     lhs = [cplex.SparsePair(ind = [ix, iy, iz], val = [-ly, -lx,  1]),
@@ -118,40 +156,43 @@ def convex_hull(ix, iy, iz, lx, ux, ly, uy):
     return lhs, rhs, senses
 
 
-# This function defines the nonconvex MIP model
+# build model
 # --------------------------------------------------------------------------- #
 # 
-def spatial_bnb():
+def set_cplex_model(coef):
     
-    # 1. formulate matrix
-    c  = [3, 1, 5, 2, 3]
-    d  = [12]
-    e  = [10, 15, 5]
-    A  = [[3, 1, 2, 0, 0]]
-    B  = [[2, -1, 2, 1, 0], [5, 0, 2, 5, 3], [0, 2, 0, 0, 3]]
-    lb = [0, 0, 0.5, 0.5, 0.5]
-    ub = [1, 1, 8.0, 8.0, 8.0]
-    bl = [[2, 3, 4]]
-    tp = ['I', 'I', 'C', 'C', 'C']
-
-    # 2. create cplex model
+    # 1. initialize cplex class
+    # 1.1) cplex 
     prob = cplex.Cplex()
-    prob = prob_settings(prob)
+    prob = set_cplex_parameters(prob)
+    # 1.2) coefficient
+    c  = coef['c' ]
+    d  = coef['d' ]
+    e  = coef['e' ]
+    A  = coef['A' ]
+    B  = coef['B' ]
+    lb = coef['lb']
+    ub = coef['ub']
+    bl = coef['bl']
+    tp = coef['tp']
 
+    # 2. add variables and constraints
+    # 2.1) variables
     prob.variables.add(obj = c, lb = lb, ub = ub, types = tp)
     prob.objective.set_sense(prob.objective.sense.minimize)
-    # linear constraint
-    M = np.concatenate((A, B), axis = 0).tolist()
-    prob.linear_constraints.add(
-        lin_expr = [cplex.SparsePair(ind = range(len(c)), val = r) for r in M], 
-        senses = ['E'] * np.size(A, axis = 0) + ['G'] * np.size(B, axis = 0), 
-        rhs = d + e)
-    # convex hull
-    for row in bl:
-        ix, iy, iz = row[0], row[1], row[2]
-        lx, ux, ly, uy = lb[ix], ub[ix], lb[iy], ub[iy]
-        lhs, rhs, senses = convex_hull(ix, iy, iz, lx, ux, ly, uy)
-        prob.linear_constraints.add(lin_expr = lhs, rhs = rhs, senses = senses)
+    # 2.2) linear constraint
+    for i in range(len(A)):
+        A_ind, A_val = coo_matrix(A[i]).col, coo_matrix(A[i]).data
+        expr = cplex.SparsePair(ind = A_ind.tolist(), val = A_val.tolist())
+        prob.linear_constraints.add(
+            lin_expr = [expr], senses = ['E'], rhs = [d[i]]
+        )
+    for i in range(len(B)):
+        B_ind, B_val = coo_matrix(B[i]).col, coo_matrix(B[i]).data
+        expr = cplex.SparsePair(ind = B_ind.tolist(), val = B_val.tolist())
+        prob.linear_constraints.add(
+            lin_expr = [expr], senses = ['G'], rhs = [e[i]]
+        )
 
     # 3. set callbacks
     contextmask = 0
@@ -161,34 +202,35 @@ def spatial_bnb():
         callbacks = my_callback(lb, ub, bl)
         prob.set_callback(callbacks, contextmask)
 
-    # 4. solve
-    prob.solve()
+    # 4. return
+    return prob
+    
 
-    print()
-    # solution.get_status() returns an integer code
-    print("Solution status = ", prob.solution.get_status(), ":", end = ' ')
-    # the following line prints the corresponding string
-    print(prob.solution.status[prob.solution.get_status()])
-    print("Solution value  = ", prob.solution.get_objective_value())
-
-    numcols = prob.variables.get_num()
-    numrows = prob.linear_constraints.get_num()
-
-    slack = prob.solution.get_linear_slacks()
-    x = prob.solution.get_values()
-
-    for j in range(numrows):
-        print("Row %d:  Slack = %10f" % (j, slack[j]))
-    for j in range(numcols):
-        print("Column %d:  Value = %10f" % (j, x[j]))
-
-    # prob.write(os.path.join(os.getcwd(), "miblp.lp"))
-
-
-# Main function
+# script entrance
 # --------------------------------------------------------------------------- #
 # 
 if __name__ == "__main__":
 
-    # 1. global variables
-    spatial_bnb()
+    # 1. create models
+    coef = set_coefficient()
+    prob = set_cplex_model(coef)
+
+    # 2. solve
+    prob.solve()
+
+    # 3. print results
+    print()
+    # 3.1) return an integer code
+    print("Solution status = ", prob.solution.get_status(), ":", end = ' ')
+    # 3.1) print the corresponding string
+    print(prob.solution.status[prob.solution.get_status()])
+    print("Solution value  = ", prob.solution.get_objective_value())
+    # 3.3) constraints and variables
+    numcols = prob.variables.get_num()
+    numrows = prob.linear_constraints.get_num()
+    slack = prob.solution.get_linear_slacks()
+    x = prob.solution.get_values()
+    for j in range(numrows):
+        print("Row %d:  Slack = %10f" % (j, slack[j]))
+    for j in range(numcols):
+        print("Column %d:  Value = %10f" % (j, x[j]))
