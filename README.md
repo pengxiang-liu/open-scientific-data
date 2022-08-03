@@ -33,4 +33,4 @@ A platform to open scientific data and demo code to the community.
 [link]() | [data]()
 
 - **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast resilience analysis of integrated electricity-gas systems," submitted to **IEEE Transactions on Power Systems**.\
-[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/NCNI_resilience_analysis_of_IEGS/data)
+[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/NCNI_resilience_analysis_of_IEGS)
