@@ -11,6 +11,9 @@ A platform to open scientific data and demo code to the community.
 * **P. Liu**, Z. Wu, et al., "An improved spatial branch-and-bound algorithm for non-convex optimal electricity-gas flow," in **IEEE Transactions on Power Systems**, vol. 37, no. 2, pp. 1326-1339, March 2022.\
 [link](https://ieeexplore.ieee.org/document/9507323) | [data](https://github.com/TesLarry/open-scientific-data/tree/main/journal-articles/01-TPWRS-00162-2021)
 
+- **P. Liu**, Z. Wu, et al., "Spatial branching for conic non-convexities in optimal electricity-gas flow," in **IEEE Transactions on Power Systems**, early access.\
+[link](https://ieeexplore.ieee.org/document/9953559) | [data]()
+
 ## 2. Elsevier
 
 - Z. Wu, **P. Liu**, et al., "A bi-level planning approach for hybrid AC-DC distribution system considering N-1 security criterion," in **Applied Energy**, vol. 230, pp. 417-428, November 2018.\
@@ -26,11 +29,9 @@ A platform to open scientific data and demo code to the community.
 
 ## 4. Submitted for Review
 
-- **P. Liu**, Z. Wu, et al., "Spatial branching for conic non-convexities in optimal electricity-gas flow," submitted to **IEEE Power Engineering Letters**.\
-[link]() | [data]()
+- **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast resilience analysis of integrated electricity-gas systems," submitted to **IEEE Transactions on Power Systems**.\
+[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/NCNI_resilience_analysis_of_IEGS)
+
 
 - **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast vulnerability analysis of smart grids," submitted to **IEEE PES ISGT Europe 2022 Conference**.\
 [link]() | [data]()
-
-- **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast resilience analysis of integrated electricity-gas systems," submitted to **IEEE Transactions on Power Systems**.\
-[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/NCNI_resilience_analysis_of_IEGS)
