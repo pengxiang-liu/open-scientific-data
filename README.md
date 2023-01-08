@@ -12,7 +12,7 @@ A platform to open scientific data and demo code to the community.
 [link](https://ieeexplore.ieee.org/document/9507323) | [data](https://github.com/TesLarry/open-scientific-data/tree/main/journal-articles/01-TPWRS-00162-2021)
 
 - **P. Liu**, Z. Wu, et al., "Spatial branching for conic non-convexities in optimal electricity-gas flow," in **IEEE Transactions on Power Systems**, early access.\
-[link](https://ieeexplore.ieee.org/document/9953559) | [data]()
+[link](https://ieeexplore.ieee.org/document/9953559) | [data](https://github.com/TesLarry/open-scientific-data/tree/main/journal-articles/PESL-00125-2022)
 
 ## 2. Elsevier
 
@@ -30,7 +30,7 @@ A platform to open scientific data and demo code to the community.
 ## 4. Submitted for Review
 
 - **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast resilience analysis of integrated electricity-gas systems," submitted to **IEEE Transactions on Power Systems**.\
-[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/NCNI_resilience_analysis_of_IEGS)
+[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/journal-articles/TPWRS-01144-2022)
 
 
 - **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast vulnerability analysis of smart grids," submitted to **IEEE PES ISGT Europe 2022 Conference**.\
