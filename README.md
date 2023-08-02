@@ -27,11 +27,10 @@ A platform to open scientific data and demo code to the community.
 - **P. Liu**, Z. Wu, et al., "A novel acceleration strategy for N-1 contingency screening in distribution system," 2020 IEEE Power & Energy Society General Meeting (PESGM), 2020, pp. 1-5.\
 [link](https://ieeexplore.ieee.org/document/9281445) | [data]()
 
+- **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast vulnerability analysis of smart grids," submitted to **IEEE PES ISGT-Europe 2022 Conference**.\
+[link](https://ieeexplore.ieee.org/document/9960551) | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/sbb_cone)
+
 ## 4. Submitted for Review
 
-- **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast resilience analysis of integrated electricity-gas systems," submitted to **IEEE Transactions on Power Systems**.\
-[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/journal-articles/TPWRS-01144-2022)
-
-
-- **P. Liu**, Z. Wu, et al., "A non-convex and non-iterative approach for fast vulnerability analysis of smart grids," submitted to **IEEE PES ISGT Europe 2022 Conference**.\
-[link]() | [data]()
+- **P. Liu**, Z. Wu, et al., "Fast Resilience Assessment of Integrated Electricity-Gas Systems Considering Non-Convex Gas Flow Dynamics," submitted to **IEEE Transactions on Smart Grid**.\
+[link]() | [data](https://github.com/TesLarry/open-scientific-data/tree/main/research/iegs-resilience)
